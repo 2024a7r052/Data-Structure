@@ -1,0 +1,110 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define SIZE 5
+typedef struct pqueue{
+    int element;
+    int priority;
+} PriorityQueue;
+PriorityQueue pq[SIZE];
+int front=-1, count = -1;
+int isEmpty(){
+    return (front==-1) ? 1 : 0;
+}
+int isFull(){
+    return (count == SIZE-1) ? 1 : 0;
+}
+void enqueue(int data, int priority){
+    if(isEmpty()){
+        count = count+1;
+        pq[count].element = data;
+        pq[count].priority = priority;
+        front = count;
+    }
+    else{
+        int i;
+        for(i=front; i<=count; i++){
+            if(pq[i].priority<priority){
+                for(int j=count; j>=i; j--){
+                    pq[j+1]= pq[j];
+            }
+            pq[i].element=data;
+            pq[i].priority=priority;
+            count++;
+            break;
+        }
+    }
+    if(i==count+1){
+        pq[i].element=data;
+        pq[i].priority=priority;
+        count++;
+    }
+}
+printf("Element Inserted !!!!\n");
+}
+int dequeue(){
+    int data = pq[front].element;
+    if(front==count)
+        front=count=-1;
+    else
+        front++;
+    return data;
+}
+int peek(){ //front
+    return pq[front].element;
+}
+int display(){
+    printf("Queue Elements are : \n");
+    for(int i=front; i<=count; i++){
+        printf("Element %d : Priority %d\n",pq[i].element, pq[i].priority);
+    }
+}
+int main(){
+    while(1){
+        printf("---Priority Queue-----\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Peek\n");
+        printf("4. Display\n");
+        printf("5. Exit\n");
+        int choice, data, p;
+        printf("Enter Choice : ");
+        scanf("%d", &choice); 
+        switch(choice){
+            case 1:
+                if(isFull())
+                    printf("Queue overflow !!!!\n");
+                else{
+                    printf("Element Element : ");
+                    scanf("%d", &data);
+                    printf("Element Priority : ");
+                    scanf("%d", &p);
+                    enqueue(data, p);
+                }
+                break;
+            case 2:
+                if(isEmpty())
+                    printf("Queue Underflow!!!!\n");
+                else
+                    printf("%d is dequeue from the queue\n", dequeue());
+                break;
+            case 3:
+                if(isEmpty())
+                    printf("Queue Empty!!!!\n");
+                else
+                    printf("Element avaliable in from of queue is %d \n", peek());
+                break;
+            case 4:
+            if(isEmpty())
+                    printf("Queue Empty!!!!\n");
+                else
+                    display();
+                break;
+            case 5:
+                exit(0);
+            default:
+                printf("Invalid Choice !!!!\n");
+        }
+        printf("\n");
+    }
+    return 0; 
+}
