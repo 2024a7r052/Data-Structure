@@ -1,0 +1,120 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node{
+    int data;
+    struct node *next;
+} Node;
+Node* head = NULL;
+Node* createNode(int ele){
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = ele;
+    newNode->next = NULL;
+    return newNode;
+}
+void insertNodeInBeg(int ele){
+    Node* newNode = createNode(ele);
+    newNode->next = head;
+    head = newNode;
+    printf("Node Inserted !!!!\n");
+}
+void insertNodeAtEnd(int ele){
+    Node* newNode = createNode(ele);
+    if(head == NULL)
+        head = newNode;
+    else{
+        Node* temp = head;
+        while(temp->next != NULL){
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        printf("Node Inserted !!!!\n");
+    }
+}
+void insertNodeAtAnyPos(int ele, int pos){
+    if(head == NULL)
+        printf("List is empty !!!\n");
+    else if(pos==1)
+        insertNodeInBeg(ele);
+    else{
+        int i=1;
+        Node* temp = head;
+        while(i<pos-1 && temp->next != NULL){
+            temp = temp->next;
+            i++;
+        }
+        if(temp->next != NULL){
+            Node* newNode= createNode(ele);
+            newNode->next = temp->next;
+            temp->next = newNode;
+            printf("Not Inserted !!!!\n");
+        }
+        else
+            printf("Invalid Position ");
+    }
+}
+void display(){
+    if(head==NULL)
+        printf("Linkded List is Empty !!!!\n");
+    else{
+        Node* temp = head;
+        while(temp != NULL){
+            printf("%d ", temp->data);
+            temp = temp->next;
+        }
+    }
+}
+int main(){
+    while(1){
+        printf("------ Singly Linked List ------\n");
+        printf("1. Insert Node In Begining\n");
+        printf("2. Insert Node At End\n");
+        printf("3. Insert Node At Any Position\n");
+        printf("4. Delet Node From Beg\n");
+        printf("5. Delet Node From End\n");
+        printf("6. Delete Node From Any Position\n");
+        printf("7. Search Element In List\n");
+        printf("8. Sort Element\n");
+        printf("9. Display List\n");
+        printf("10. Exit\n\n");
+        int choice, value, pos;
+        printf("Enter Choice : ");
+        scanf("%d", &choice);
+        switch(choice){
+            case 1:
+                printf("Enter Value : ");
+                scanf("%d", &value);
+                insertNodeInBeg(value);
+                break;
+            case 2:
+                printf("Enter Value : ");
+                scanf("%d", &value);
+                insertNodeAtEnd(value);
+                break;
+            case 3:
+                printf("Enter Value : ");
+                scanf("%d", &value);
+                printf("Enter Position : ");
+                scanf("%d", &pos);
+                insertNodeAtAnyPos(value, pos);
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                display();
+                break;
+            case 10:
+                exit(0);
+            default:
+                 printf("Invalid Choice !!!!\n");
+        }
+    }
+    return 0;
+}
